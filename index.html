@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Krishna Cinemas</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f4eff7;--surf:#fff;--ink:#22172b;--mute:#6b5d78;--line:#ddd2e6;--acc:#b5155a;--accink:#fff;--gold:#a87400;--bad:#b3402f;--ok:#2b7a4b;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#17101e;--surf:#221a2c;--ink:#f0e9f5;--mute:#a597b3;--line:#3a2e47;--acc:#ef5c9d;--accink:#2a0716;--gold:#e3b341;--bad:#ee8573;--ok:#6cc08b}}
+:root[data-theme="dark"]{--bg:#17101e;--surf:#221a2c;--ink:#f0e9f5;--mute:#a597b3;--line:#3a2e47;--acc:#ef5c9d;--accink:#2a0716;--gold:#e3b341;--bad:#ee8573;--ok:#6cc08b}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 Outfit,system-ui,sans-serif}
+header{max-width:980px;margin:auto;padding:20px 16px 4px}
+h1{margin:0;font-size:clamp(1.8rem,5vw,2.7rem);font-weight:800;letter-spacing:-.02em}
+h1 a{color:inherit;text-decoration:none}
+header p{margin:2px 0 0;color:var(--mute)}
+nav{display:flex;gap:4px;max-width:980px;margin:auto;padding:10px 16px;position:sticky;top:env(safe-area-inset-top,0px);background:var(--bg);z-index:5}
+nav a{padding:8px 16px;border-radius:20px;color:var(--mute);text-decoration:none;font-weight:600}
+nav a.on{background:var(--ink);color:var(--bg)}
+main{max-width:980px;margin:auto;padding:8px 16px 40px}
+a{color:var(--acc)}
+.crumbs{margin:0 0 14px;color:var(--mute);font-size:.92rem}.crumbs span{margin:0 6px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px}
+.card{background:var(--surf);border:1px solid var(--line);border-radius:10px;overflow:hidden;display:flex;flex-direction:column}
+.poster{height:150px;padding:12px;display:flex;align-items:flex-end;color:#fff;font-weight:800;font-size:1.3rem;line-height:1.1}
+.card .b{padding:12px;display:flex;flex-direction:column;gap:8px;flex:1}.card small{color:var(--mute)}
+button{font:inherit;font-weight:600;border:0;border-radius:6px;padding:9px 16px;background:var(--acc);color:var(--accink);cursor:pointer}
+button.alt{background:transparent;color:var(--ink);border:1px solid var(--line);padding:6px 12px}
+button:disabled{opacity:.45;cursor:not-allowed}
+:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.panel,form{background:var(--surf);border:1px solid var(--line);border-radius:10px;padding:16px;margin-bottom:16px}
+h2{margin:0 0 10px;font-size:1.3rem}.day{margin:14px 0 6px;font-weight:800;color:var(--gold)}
+.times{display:flex;flex-wrap:wrap;gap:10px}
+.show{background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:10px 14px;text-align:left;color:var(--ink)}
+.show b{display:block;font-size:1.1rem}.show small{color:var(--mute);display:block}
+.screen{height:8px;border-radius:8px;background:linear-gradient(90deg,transparent,var(--gold),transparent);margin:6px auto 4px;max-width:420px}
+.screenl{text-align:center;color:var(--mute);font-size:.85rem;margin-bottom:14px}
+.seats{display:grid;gap:6px;justify-content:center;margin-bottom:12px}
+.row{display:flex;gap:6px;align-items:center}.row i{width:18px;font-style:normal;color:var(--mute);font-size:.85rem}
+.seat{width:34px;height:34px;padding:0;border-radius:6px 6px 3px 3px;background:var(--bg);border:1px solid var(--line);color:var(--ink);font-size:.75rem}
+.seat.prem{border-color:var(--gold)}.seat.sel{background:var(--acc);color:var(--accink);border-color:var(--acc)}
+.seat.taken{background:var(--line);color:var(--mute);cursor:not-allowed;text-decoration:line-through}
+.legend{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;color:var(--mute);font-size:.85rem;margin-bottom:12px}
+.f{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+label{display:flex;flex-direction:column;gap:4px;font-weight:600;font-size:.9rem}
+input{font:inherit;padding:9px;border:1px solid var(--line);border-radius:6px;background:var(--bg);color:var(--ink)}
+.msg{margin:10px 0;font-weight:600}.msg.bad{color:var(--bad)}.msg.ok{color:var(--ok)}
+.sum{display:flex;justify-content:space-between;padding:4px 0;color:var(--mute)}.sum.t{color:var(--ink);font-weight:800;font-size:1.15rem;border-top:1px solid var(--line);margin-top:6px;padding-top:8px}
+.ticket{background:var(--surf);border:1px solid var(--line);border-left:6px solid var(--acc);border-radius:8px;padding:12px 14px;margin-bottom:10px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.ticket.off{border-left-color:var(--line);opacity:.65}.ticket b{font-size:1.1rem}.ticket small{color:var(--mute);display:block}
+.ref{font-weight:800;letter-spacing:.08em;color:var(--gold)}
+.steps{display:flex;gap:6px;margin-bottom:16px;overflow-x:auto}
+.steps a,.steps span{flex:1;min-width:96px;padding:8px 10px;border-radius:8px;border:1px solid var(--line);background:var(--surf);color:var(--mute);text-decoration:none;font-size:.85rem;font-weight:600;text-align:center;white-space:nowrap}
+.steps a{color:var(--ok)}.steps .cur{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.opt{display:flex;flex-direction:row;align-items:center;gap:12px;padding:12px;border:1px solid var(--line);border-radius:8px;margin-bottom:8px;cursor:pointer}
+.opt input{width:auto}.opt:has(input:checked){border-color:var(--acc);background:var(--bg)}
+.opt.dis{opacity:.5;cursor:not-allowed}.sw{width:34px;height:46px;border-radius:5px;flex:none}
+.opt small{display:block;color:var(--mute);font-weight:400}
+.sub{color:var(--mute);margin:0 0 12px}
+</style>
+</head>
+<body>
+<header><h1><a href="#step1">Krishna Cinemas</a></h1><p>Pick a film, choose a seat, get your ticket.</p></header>
+<nav><a href="#step1">Book a ticket</a><a href="#tickets">My tickets</a></nav>
+<main id="app"></main>
+
+<script>
+/* ===== LAYER 5: DATA ===== */
+const Store={
+  seed:{movies:[
+    {id:1,title:"Midnight Harbor",genre:"Thriller",mins:118,rating:"UA",price:220,hue:215,about:"A night-shift ferry captain finds a passenger who should not exist."},
+    {id:2,title:"The Last Lantern",genre:"Adventure",mins:132,rating:"U",price:250,hue:28,about:"Three siblings cross a desert to relight a mountain beacon."},
+    {id:3,title:"Paper Kites",genre:"Drama",mins:104,rating:"U",price:200,hue:150,about:"Two rivals in a kite-making town discover a shared secret."},
+    {id:4,title:"Neon Monsoon",genre:"Sci-fi",mins:126,rating:"UA",price:280,hue:285,about:"In a city that never stops raining, a courier carries a stolen memory."},
+    {id:5,title:"Orbit Kitchen",genre:"Comedy",mins:98,rating:"U",price:180,hue:345,about:"A chef cooks for a space station that hates everything on the menu."}
+  ],bookings:[]},
+  load(){try{const s=localStorage.getItem("krishna");if(s)return JSON.parse(s);}catch(e){}return JSON.parse(JSON.stringify(this.seed));},
+  save(d){try{localStorage.setItem("krishna",JSON.stringify(d));}catch(e){}}
+};
+
+/* ===== LAYER 4: DATA ACCESS ===== */
+const Repo={
+  db:Store.load(),
+  movies(){return this.db.movies;},
+  movie(id){return this.db.movies.find(m=>m.id===id);},
+  bookings(){return this.db.bookings;},
+  taken(showId){return this.db.bookings.filter(b=>b.showId===showId&&b.status==="Confirmed").flatMap(b=>b.seats);},
+  add(b){b.id=Date.now();this.db.bookings.push(b);Store.save(this.db);return b;},
+  update(id,p){Object.assign(this.db.bookings.find(b=>b.id===id),p);Store.save(this.db);}
+};
+
+/* ===== LAYER 3: BUSINESS LOGIC ===== */
+const Service={
+  TAX:0.08,MAX:6,ROWS:"ABCDEF",COLS:8,PREMIUM:"EF",EXTRA:50,CODE:"CINE10",TIMES:["11:00","14:30","18:00","21:15"],
+  date(d){const x=new Date();x.setDate(x.getDate()+d);return x.toISOString().slice(0,10);},
+  shows(m){const o=[];[0,1].forEach(d=>this.TIMES.forEach((t,i)=>o.push({id:m.id+"-"+d+"-"+i,movieId:m.id,day:d,date:this.date(d),time:t,hall:"Hall "+(1+(m.id+i)%3),price:m.price})));return o;},
+  show(id){return this.shows(Repo.movie(+id.split("-")[0])).find(s=>s.id===id);},
+  seatPrice(show,seat){return show.price+(this.PREMIUM.includes(seat[0])?this.EXTRA:0);},
+  left(show){return this.ROWS.length*this.COLS-Repo.taken(show.id).length;},
+  price(show,seats,code){
+    const sub=seats.reduce((a,s)=>a+this.seatPrice(show,s),0);
+    const disc=(code||"").trim().toUpperCase()===this.CODE?sub*0.1:0;
+    const tax=(sub-disc)*this.TAX;return{sub,disc,tax,total:sub-disc+tax};
+  },
+  validateUser(u){
+    if(!u.name.trim())return"Enter your name.";
+    if(!/^\S+@\S+\.\S+$/.test(u.email))return"Enter a valid email address.";
+    if(!/^[0-9+\-\s]{7,15}$/.test(u.phone))return"Enter a phone number with 7 to 15 digits.";
+    return null;
+  },
+  book(u,code,showId,seats){
+    if(!seats.length)return{error:"Choose at least one seat."};
+    if(seats.length>this.MAX)return{error:"You can book at most "+this.MAX+" seats."};
+    const taken=Repo.taken(showId),clash=seats.filter(x=>taken.includes(x));
+    if(clash.length)return{error:"Seat "+clash.join(", ")+" was just booked. Go back and pick other seats."};
+    const sh=this.show(showId),m=Repo.movie(sh.movieId),p=this.price(sh,seats,code);
+    return{booking:Repo.add({ref:"KC"+Math.random().toString(36).slice(2,7).toUpperCase(),showId,movieId:m.id,title:m.title,date:sh.date,time:sh.time,hall:sh.hall,seats:seats.slice(),name:u.name.trim(),total:p.total,status:"Confirmed"})};
+  },
+  cancel(id){Repo.update(id,{status:"Cancelled"});}
+};
+
+/* ===== LAYER 2: CONTROLLER (each step unlocks the next) ===== */
+const Controller={
+  st:{reach:1,user:{name:"",email:"",phone:""},movie:null,show:null,seats:[],done:null},
+  route(){
+    const h=location.hash||"#step1";
+    if(h==="#tickets")return View.tickets();
+    const m=/^#step([1-5])$/.exec(h);
+    let n=m?+m[1]:1;if(n>this.st.reach)n=this.st.reach;
+    View.step(n);
+  },
+  unlock(n){this.st.reach=Math.max(this.st.reach,n);location.hash="step"+n;if(location.hash==="#step"+n)this.route();},
+  submit1(f){
+    const u=Object.fromEntries(new FormData(f)),e=Service.validateUser(u);
+    if(e)return View.msg(e,"bad");
+    this.st.user=u;this.unlock(2);
+  },
+  submit2(f){
+    const v=new FormData(f).get("movie");if(!v)return View.msg("Choose a movie to continue.","bad");
+    if(this.st.movie!==+v){this.st.movie=+v;this.st.show=null;this.st.seats=[];this.st.reach=2;}
+    this.unlock(3);
+  },
+  submit3(f){
+    const v=new FormData(f).get("show");if(!v)return View.msg("Choose a showtime to continue.","bad");
+    if(this.st.show!==v){this.st.show=v;this.st.seats=[];this.st.reach=3;}
+    this.unlock(4);
+  },
+  toggle(seat){
+    const s=this.st.seats,i=s.indexOf(seat);
+    if(i>=0)s.splice(i,1);else if(s.length<Service.MAX)s.push(seat);
+    View.step(4);
+  },
+  submit4(){if(!this.st.seats.length)return;this.unlock(5);},
+  preview(f){View.totals(Service.price(Service.show(this.st.show),this.st.seats,f.code.value));},
+  submit5(f){
+    const r=Service.book(this.st.user,f.code.value,this.st.show,this.st.seats);
+    if(r.error)return View.msg(r.error,"bad");
+    this.st.done=r.booking;View.confirm();
+  },
+  again(){this.st={reach:2,user:this.st.user,movie:null,show:null,seats:[],done:null};this.unlock(2);},
+  bookMovie(id){
+    if(!this.st.user.name)return this.unlock(1);
+    this.st.movie=id;this.st.show=null;this.st.seats=[];this.st.done=null;this.st.reach=3;this.unlock(3);
+  },
+  cancel(id){if(confirm("Cancel this ticket?")){Service.cancel(id);View.tickets();}}
+};
+
+/* ===== LAYER 1: PRESENTATION ===== */
+const $=s=>document.querySelector(s),money=n=>"₹"+Math.round(n).toLocaleString("en-IN");
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const View={
+  paint(html,tab){
+    document.querySelectorAll("nav a").forEach(a=>a.classList.toggle("on",a.hash===tab));
+    $("#app").innerHTML=html;window.scrollTo(0,0);
+  },
+  stepper(n){
+    const L=["Your details","Movie","Showtime","Seats","Payment"],r=Controller.st.reach;
+    return `<div class="steps">${L.map((t,i)=>{const k=i+1,lab=k+". "+t;
+      return k===n?`<span class="cur">${lab}</span>`:k<=r&&k<n?`<a href="#step${k}">${lab}</a>`:`<span>${lab}</span>`}).join("")}</div>`;
+  },
+  msgbox(){return `<div id="msg" class="msg" role="status"></div>`;},
+  msg(t,k){const m=$("#msg");m.className="msg "+k;m.textContent=t;},
+  step(n){this.paint(this.stepper(n)+this["s"+n](),"#step1");},
+  s1(){
+    const u=Controller.st.user;
+    return `<form onsubmit="event.preventDefault();Controller.submit1(this)"><h2>Step 1 of 5: Your details</h2><p class="sub">Enter your details to unlock the movie list.</p>
+      <div class="f"><label>Name<input name="name" value="${esc(u.name)}" required></label><label>Email<input name="email" type="email" value="${esc(u.email)}" required></label><label>Phone<input name="phone" inputmode="tel" value="${esc(u.phone)}" required></label></div>
+      ${this.msgbox()}<button>Continue to movies</button></form>`;
+  },
+  s2(){
+    const cur=Controller.st.movie;
+    return `<form onsubmit="event.preventDefault();Controller.submit2(this)"><h2>Step 2 of 5: Choose a movie</h2><p class="sub">Hello ${esc(Controller.st.user.name)}, pick one film.</p>
+      ${Repo.movies().map(m=>`<label class="opt"><input type="radio" name="movie" value="${m.id}" ${cur===m.id?"checked":""}><span class="sw" style="background:linear-gradient(160deg,hsl(${m.hue},55%,38%),hsl(${(m.hue+40)%360},60%,22%))"></span><span><b>${esc(m.title)}</b><small>${m.genre}, ${m.mins} min, ${m.rating}. ${esc(m.about)}</small></span></label>`).join("")}
+      ${this.msgbox()}<button>Continue to showtimes</button></form>`;
+  },
+  s3(){
+    const st=Controller.st,m=Repo.movie(st.movie),all=Service.shows(m);
+    const day=d=>`<div class="day">${d===0?"Today":"Tomorrow"}, ${Service.date(d)}</div>${all.filter(s=>s.day===d).map(s=>{const l=Service.left(s);
+      return `<label class="opt ${l?"":"dis"}"><input type="radio" name="show" value="${s.id}" ${st.show===s.id?"checked":""} ${l?"":"disabled"}><span><b>${s.time}</b><small>${s.hall}, from ${money(s.price)}, ${l} seats left</small></span></label>`}).join("")}`;
+    return `<form onsubmit="event.preventDefault();Controller.submit3(this)"><h2>Step 3 of 5: Pick a showtime</h2><p class="sub">${esc(m.title)} (<a href="#step2">change movie</a>)</p>
+      ${day(0)}${day(1)}${this.msgbox()}<button>Continue to seats</button></form>`;
+  },
+  s4(){
+    const st=Controller.st,sh=Service.show(st.show),m=Repo.movie(sh.movieId),taken=Repo.taken(sh.id);
+    const rows=[...Service.ROWS].map(r=>`<div class="row"><i>${r}</i>${Array.from({length:Service.COLS},(_,c)=>{const id=r+(c+1),t=taken.includes(id),s=st.seats.includes(id);
+      return `<button class="seat${Service.PREMIUM.includes(r)?" prem":""}${s?" sel":""}${t?" taken":""}" ${t?"disabled":""} aria-label="Seat ${id}${t?", taken":""}" aria-pressed="${s}" onclick="Controller.toggle('${id}')">${c+1}</button>`}).join("")}</div>`).join("");
+    const pr=Service.price(sh,st.seats,"");
+    return `<div class="panel"><h2>Step 4 of 5: Select seats</h2><p class="sub">${esc(m.title)}, ${sh.date} at ${sh.time}, ${sh.hall} (<a href="#step3">change time</a>)</p>
+      <div class="screen"></div><div class="screenl">Screen</div><div class="seats">${rows}</div>
+      <div class="legend"><span>Standard ${money(sh.price)}</span><span style="color:var(--gold)">Rows E and F ${money(sh.price+Service.EXTRA)}</span><span>Max ${Service.MAX} seats</span></div>
+      <p><b>${st.seats.length?st.seats.slice().sort().join(", ")+" - "+money(pr.sub):"No seats selected"}</b></p>
+      <button ${st.seats.length?"":"disabled"} onclick="Controller.submit4()">Continue to payment</button></div>`;
+  },
+  s5(){
+    const st=Controller.st,sh=Service.show(st.show),m=Repo.movie(sh.movieId);
+    setTimeout(()=>{const f=$("#pf");if(f)Controller.preview(f)},0);
+    return `<form id="pf" onsubmit="event.preventDefault();Controller.submit5(this)" oninput="Controller.preview(this)"><h2>Step 5 of 5: Payment</h2>
+      <p class="sub">${esc(m.title)}, ${sh.date} at ${sh.time}, ${sh.hall}. Seats ${st.seats.slice().sort().join(", ")} (<a href="#step4">change seats</a>)</p>
+      <div class="f"><label>Payment method<select name="pay" style="font:inherit;padding:9px;border:1px solid var(--line);border-radius:6px;background:var(--bg);color:var(--ink)"><option>Card</option><option>UPI</option><option>Pay at counter</option></select></label>
+      <label>Promo code<input name="code" placeholder="Try CINE10"></label></div>
+      <div id="tot" style="margin-top:12px"></div>${this.msgbox()}<button>Pay and get ticket</button></form>`;
+  },
+  totals(p){
+    $("#tot").innerHTML=`<div class="sum"><span>Tickets</span><span>${money(p.sub)}</span></div>${p.disc?`<div class="sum"><span>Promo discount</span><span>-${money(p.disc)}</span></div>`:""}<div class="sum"><span>Tax (8%)</span><span>${money(p.tax)}</span></div><div class="sum t"><span>Total</span><span>${money(p.total)}</span></div>`;
+  },
+  confirm(){
+    const b=Controller.st.done;
+    this.paint(`<div class="panel"><h2>Booking confirmed</h2><div class="ticket"><div><span class="ref">${b.ref}</span><b> ${esc(b.title)}</b><small>${b.date} at ${b.time}, ${b.hall}</small><small>Seats ${b.seats.slice().sort().join(", ")}, ${esc(b.name)}, ${money(b.total)}</small></div></div>
+      <button onclick="Controller.again()">Book another ticket</button> <a href="#tickets" style="margin-left:10px">View my tickets</a></div>`,"#step1");
+  },
+  tickets(){
+    const list=Repo.bookings().slice().reverse().map(b=>`<div class="ticket ${b.status==="Cancelled"?"off":""}"><div><span class="ref">${b.ref}</span><b> ${esc(b.title)}</b><small>${b.date} at ${b.time}, ${b.hall}</small><small>Seats ${b.seats.slice().sort().join(", ")}, ${esc(b.name)}, ${money(b.total)}, ${b.status}</small></div>
+      <div><button class="alt" onclick="Controller.bookMovie(${b.movieId})">${b.status==="Confirmed"?"More shows":"Book again"}</button> ${b.status==="Confirmed"?`<button class="alt" onclick="Controller.cancel(${b.id})">Cancel</button>`:""}</div></div>`).join("");
+    this.paint(list||`<div class="panel">No tickets yet. <a href="#step1">Start a booking</a> and your ticket will appear here.</div>`,"#tickets");
+  }
+};
+window.addEventListener("hashchange",()=>Controller.route());
+Controller.route();
+</script>
+</body>
+</html>
